@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"net"
 
@@ -14,10 +13,10 @@ type server struct {
 	pb.UnimplementedBitTorrentServer
 }
 
-func (s *server) Send(ctx context.Context, in *pb.BitTorrent) (*pb.Status, error) {
-	fmt.Println(in.Infohash)
+func (s *server) Send(ctx context.Context, in *pb.BitTorrent) (*pb.Empty, error) {
+	log.Println(in.Infohash)
 
-	return nil, nil
+	return &pb.Empty{}, nil
 }
 
 func main() {
