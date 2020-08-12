@@ -1,6 +1,7 @@
 package main
 
 import (
+	pb "../service"
 	"context"
 	"dht"
 	"encoding/hex"
@@ -9,9 +10,6 @@ import (
 	"net/http"
 	_ "net/http/pprof"
 	"strings"
-	"time"
-
-	pb "../service"
 )
 
 type file struct {
@@ -35,11 +33,10 @@ func main() {
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}
-	defer conn.Close()
+	//defer conn.Close()
 	c := pb.NewBitTorrentClient(conn)
 
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-	defer cancel()
+	ctx := context.Background()
 
 	w := dht.NewWire(65536, 1024, 256)
 	go func() {
@@ -90,8 +87,8 @@ func main() {
 				}
 				files = append(files, f)
 			}
-
-			c.Send(ctx, &pb.BitTorrent{
+			log.Println(bt.InfoHash)
+			_, err = c.Send(ctx, &pb.BitTorrent{
 				Infohash: bt.InfoHash,
 				Name:     bt.Name,
 				Files:    files,
