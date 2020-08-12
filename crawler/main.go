@@ -1,7 +1,7 @@
 package main
 
 import (
-	pb "../service"
+	pb "github.com/Olament/gDHT/service"
 	"context"
 	"dht"
 	"encoding/hex"
