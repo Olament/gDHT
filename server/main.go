@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/golang/protobuf/ptypes/empty"
 	"log"
 	"net"
 
@@ -15,7 +14,7 @@ type server struct {
 	pb.UnimplementedBitTorrentServer
 }
 
-func (s *server) Send(ctx context.Context, in *pb.BitTorrent) (*empty.Empty, error) {
+func (s *server) Send(ctx context.Context, in *pb.BitTorrent) (*pb.Status, error) {
 	fmt.Println(in.Infohash)
 
 	return nil, nil
