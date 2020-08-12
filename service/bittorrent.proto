@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package service;
 
-option go_package = "github.com/Olament/gDHTpr";
+option go_package = "github.com/Olament/gDHT";
 
 service bitTorrent {
   rpc send (BitTorrent) returns (Empty) {}

@@ -1,9 +1,9 @@
 package main
 
 import (
+	"github.com/Olament/gDHT/crawler/dht"
 	pb "github.com/Olament/gDHT/service"
 	"context"
-	"github.com/Olament/gDHT/crawler/dht"
 	"encoding/hex"
 	"google.golang.org/grpc"
 	"log"
