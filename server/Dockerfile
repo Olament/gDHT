@@ -17,4 +17,4 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build
 FROM scratch
 COPY --from=builder /app/server /app/
 EXPOSE 50051
-ENTRYPOINT ["/app/main"]
+ENTRYPOINT ["/app/server"]
