@@ -4,12 +4,13 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	pb "github.com/Olament/gDHT/service"
 	"github.com/go-redis/redis"
+	"google.golang.org/grpc"
 	"log"
 	"net"
-
-	pb "github.com/Olament/gDHT/service"
-	"google.golang.org/grpc"
+	"github.com/olivere/elastic/v7"
+	"time"
 )
 
 type server struct {
@@ -64,6 +65,14 @@ func (s *server) Send(ctx context.Context, in *pb.BitTorrent) (*pb.Empty, error)
 	return &pb.Empty{}, nil
 }
 
+// process data from redis message queue by indexing them to elastic search
+func Process(client *elastic.Client, value string) {
+
+	// TODO: filter the value
+
+	client.Index().Index("torrent").BodyString(value).Do(ctx)
+}
+
 func main() {
 	/* setup gRPC service */
 	lis, err := net.Listen("tcp", ":50051")
@@ -76,4 +85,18 @@ func main() {
 		log.Fatalf("failed to serve: %v", err)
 	}
 
+	/* setup elastic search */
+	es, err := elastic.NewClient()
+	if err != nil {
+		log.Fatalf("Error creating the client: %s", err)
+	}
+
+	for {
+		value, err := rdb.BLPop(ctx, 0*time.Second, "queue").Result()
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		Process(es, value[1])
+	}
 }
