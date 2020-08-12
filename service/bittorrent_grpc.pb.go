@@ -17,7 +17,7 @@ const _ = grpc.SupportPackageIsVersion6
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type BitTorrentClient interface {
-	Send(ctx context.Context, in *BitTorrent, opts ...grpc.CallOption) (*Status, error)
+	Send(ctx context.Context, in *BitTorrent, opts ...grpc.CallOption) (*Empty, error)
 }
 
 type bitTorrentClient struct {
@@ -28,8 +28,8 @@ func NewBitTorrentClient(cc grpc.ClientConnInterface) BitTorrentClient {
 	return &bitTorrentClient{cc}
 }
 
-func (c *bitTorrentClient) Send(ctx context.Context, in *BitTorrent, opts ...grpc.CallOption) (*Status, error) {
-	out := new(Status)
+func (c *bitTorrentClient) Send(ctx context.Context, in *BitTorrent, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
 	err := c.cc.Invoke(ctx, "/service.bitTorrent/send", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -41,7 +41,7 @@ func (c *bitTorrentClient) Send(ctx context.Context, in *BitTorrent, opts ...grp
 // All implementations must embed UnimplementedBitTorrentServer
 // for forward compatibility
 type BitTorrentServer interface {
-	Send(context.Context, *BitTorrent) (*Status, error)
+	Send(context.Context, *BitTorrent) (*Empty, error)
 	mustEmbedUnimplementedBitTorrentServer()
 }
 
@@ -49,7 +49,7 @@ type BitTorrentServer interface {
 type UnimplementedBitTorrentServer struct {
 }
 
-func (*UnimplementedBitTorrentServer) Send(context.Context, *BitTorrent) (*Status, error) {
+func (*UnimplementedBitTorrentServer) Send(context.Context, *BitTorrent) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Send not implemented")
 }
 func (*UnimplementedBitTorrentServer) mustEmbedUnimplementedBitTorrentServer() {}

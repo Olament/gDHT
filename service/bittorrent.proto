@@ -7,11 +7,11 @@ package service;
 option go_package = "service";
 
 service bitTorrent {
-  rpc send (BitTorrent) returns (Status) {}
+  rpc send (BitTorrent) returns (Empty) {}
 }
 
-message Status {
-  int32 code = 1;
+message Empty {
+
 }
 
 message BitTorrent {
