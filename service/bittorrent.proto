@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+package service;
+
+option go_package = "service";
+
+service bitTorrent {
+  rpc send (BitTorrent) returns (google.protobuf.Empty) {}
+}
+
+message BitTorrent {
+  string infohash = 1;
+  string name = 2;
+  repeated File files = 3;
+  int32 length = 4;
+}
+
+message File {
+  string path = 1;
+  int32 length = 2;
+}
