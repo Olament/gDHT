@@ -1,16 +1,13 @@
 package main
 
 import (
+	"context"
 	"dht"
 	"encoding/hex"
-	"encoding/json"
-	"fmt"
 	"google.golang.org/grpc"
 	"log"
 	"net/http"
 	_ "net/http/pprof"
-	"os"
-	"context"
 	"strings"
 	"time"
 
