@@ -3,7 +3,7 @@ package main
 import (
 	pb "github.com/Olament/gDHT/service"
 	"context"
-	"dht"
+	"github.com/Olament/gDHT/crawler/dht"
 	"encoding/hex"
 	"google.golang.org/grpc"
 	"log"
