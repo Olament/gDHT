@@ -1,13 +1,20 @@
 package main
 
 import (
-	"crawler/dht"
+	"dht"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"google.golang.org/grpc"
+	"log"
 	"net/http"
 	_ "net/http/pprof"
+	"os"
+	"context"
 	"strings"
+	"time"
+
+	pb "../service"
 )
 
 type file struct {
@@ -26,6 +33,16 @@ func main() {
 	go func() {
 		http.ListenAndServe(":6060", nil)
 	}()
+
+	conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure(), grpc.WithBlock())
+	if err != nil {
+		log.Fatalf("did not connect: %v", err)
+	}
+	defer conn.Close()
+	c := pb.NewBitTorrentClient(conn)
+
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
 
 	w := dht.NewWire(65536, 1024, 256)
 	go func() {
@@ -68,10 +85,21 @@ func main() {
 				bt.Length = info["length"].(int)
 			}
 
-			data, err := json.Marshal(bt)
-			if err == nil {
-				fmt.Printf("%s\n\n", data)
+			files := make([]*pb.File, len(bt.Files))
+			for _, value := range bt.Files {
+				f := &pb.File{
+					Path:   value.Path,
+					Length: int32(value.Length),
+				}
+				files = append(files, f)
 			}
+
+			c.Send(ctx, &pb.BitTorrent{
+				Infohash: bt.InfoHash,
+				Name:     bt.Name,
+				Files:    files,
+				Length:   int32(bt.Length),
+			})
 		}
 	}()
 	go w.Run()
