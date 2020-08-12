@@ -86,5 +86,5 @@ var _BitTorrent_serviceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "service/bittorrent.proto",
+	Metadata: "bittorrent.proto",
 }
