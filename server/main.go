@@ -57,7 +57,7 @@ func (s *server) Send(ctx context.Context, in *pb.BitTorrent) (*pb.Empty, error)
 		return &pb.Empty{}, err
 	}
 	fmt.Printf("%s\n\n", value)
-	err = rdb.LPush(ctx, "queue", value).Err()
+	err = rdb.LPush("queue", value).Err()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -92,7 +92,7 @@ func main() {
 	}
 
 	for {
-		value, err := rdb.BLPop(ctx, 0*time.Second, "queue").Result()
+		value, err := rdb.BLPop(0*time.Second, "queue").Result()
 		if err != nil {
 			log.Fatal(err)
 		}
