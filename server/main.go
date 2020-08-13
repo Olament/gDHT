@@ -31,7 +31,7 @@ type bitdata struct {
 
 var ctx = context.Background()
 var rdb = redis.NewClient(&redis.Options{
-	Addr:     "localhost:6379",
+	Addr:     "redis:6379",
 	Password: "",
 	DB:       0,
 })
@@ -70,7 +70,10 @@ func Process(client *elastic.Client, value string) {
 
 	// TODO: filter the value
 
-	client.Index().Index("torrent").BodyString(value).Do(ctx)
+	_, err := client.Index().Index("torrent").BodyString(value).Do(ctx)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func main() {
@@ -79,14 +82,19 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
-	s := grpc.NewServer()
-	pb.RegisterBitTorrentServer(s, &server{})
-	if err := s.Serve(lis); err != nil {
-		log.Fatalf("failed to serve: %v", err)
-	}
+	go func() {
+		s := grpc.NewServer()
+		pb.RegisterBitTorrentServer(s, &server{})
+		if err := s.Serve(lis); err != nil {
+			log.Fatalf("failed to serve: %v", err)
+		}
+	}()
+
+	time.Sleep(time.Minute) // wait elasticsearch to boot, temp solution
+	log.Println("Connect to elastic search node")
 
 	/* setup elastic search */
-	es, err := elastic.NewClient()
+	es, err := elastic.NewSimpleClient(elastic.SetURL("http://elastic:9200"))
 	if err != nil {
 		log.Fatalf("Error creating the client: %s", err)
 	}
@@ -96,7 +104,8 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-
+		log.Println("Retrive from Redis")
+		log.Println(value)
 		Process(es, value[1])
 	}
 }
