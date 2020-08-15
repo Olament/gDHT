@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>gDHT Search Engine</title>
+</head>
+<body>
+    <form method="Post" th:action="@{/search}" th:object="${query}">
+        <input type="text" th:field="*{queryText}"/>
+        <button>Submit</button>
+    </form>
+<!--    <form method="Post" th:object="${query}">-->
+<!--        <input type="text" th:field="*{queryText}"/>-->
+<!--        <button>Submit</button>-->
+<!--    </form>-->
+</body>
+</html>

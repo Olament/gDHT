@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Search result</title>
+</head>
+<body>
+    <h1>Placeholder</h1>
+    <table style="width:100%">
+        <tr>
+            <th>Name</th>
+            <th>Infohash</th>
+        </tr>
+        <tr th:each="result : ${results}">
+            <td th:text="${result.getName()}"></td>
+            <td th:text="${result.getInfohash()}"></td>
+        </tr>
+    </table>
+</body>
+</html>
