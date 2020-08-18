@@ -29,6 +29,14 @@ type bitdata struct {
 	Length   int    `json:"length,omitempty"`
 }
 
+type bitdataWithSuggest struct {
+	InfoHash string `json:"infohash"`
+	Name     string `json:"name"`
+	Name_Suggest string `json:-`
+	Files    []file `json:"files,omitempty"`
+	Length   int    `json:"length,omitempty"`
+}
+
 var ctx = context.Background()
 var rdb = redis.NewClient(&redis.Options{
 	Addr:     "redis:6379",
@@ -71,12 +79,13 @@ func Process(client *elastic.Client, bulk *elastic.BulkService, value string) {
 
 	// TODO: filter the value
 
-	var torrent bitdata
+	var torrent bitdataWithSuggest
 	err := json.Unmarshal([]byte(value), &torrent)
 	if err != nil {
 		log.Printf("Fail to unmarshal %s\n", value)
 		return
 	}
+	torrent.Name_Suggest = torrent.Name
 
 	isExist, err := client.Exists().Index("torrent").Id(torrent.InfoHash).Do(ctx)
 	if err != nil {
@@ -132,7 +141,7 @@ func main() {
 										"type": "long"
 									},
 									"path": {
-										"type": "completion",
+										"type": "text",
 										"analyzer": "standard",
 										"search_analyzer": "standard"
 									}
@@ -145,9 +154,12 @@ func main() {
 								"type": "long"
 							},
 							"name": {
-								"type": "completion",
+								"type": "text",
 								"analyzer": "standard",
 								"search_analyzer": "standard"
+							},
+							"name_suggest": {
+								"type": "completion"
 							}
 						}
 					}
