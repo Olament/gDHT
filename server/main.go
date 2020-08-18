@@ -36,6 +36,7 @@ var rdb = redis.NewClient(&redis.Options{
 	DB:       0,
 })
 
+
 func (s *server) Send(ctx context.Context, in *pb.BitTorrent) (*pb.Empty, error) {
 	/* map gRPC struct to bittorrent data */
 	files := make([]file, len(in.Files))
@@ -70,9 +71,22 @@ func Process(client *elastic.Client, value string) {
 
 	// TODO: filter the value
 
-	_, err := client.Index().Index("torrent").BodyString(value).Do(ctx)
+	var torrent bitdata
+	err := json.Unmarshal([]byte(value), &torrent)
 	if err != nil {
 		log.Fatal(err)
+	}
+
+	isExist, err := client.Exists().Id(torrent.InfoHash).Do(ctx)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if !isExist {
+		_, err = client.Index().Index("torrent").Id(torrent.InfoHash).BodyJson(torrent).Do(ctx)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 }
 
@@ -104,8 +118,6 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		log.Println("Retrive from Redis")
-		log.Println(value)
 		Process(es, value[1])
 	}
 }
