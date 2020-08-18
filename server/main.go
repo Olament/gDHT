@@ -57,7 +57,7 @@ func (s *server) Send(ctx context.Context, in *pb.BitTorrent) (*pb.Empty, error)
 	if err != nil {
 		return &pb.Empty{}, err
 	}
-	fmt.Printf("Receive %s\n", value)
+	fmt.Printf("Receive %s\n", data.Name)
 	err = rdb.LPush("queue", value).Err()
 	if err != nil {
 		log.Fatal(err)
@@ -86,7 +86,7 @@ func Process(client *elastic.Client, bulk *elastic.BulkService, value string) {
 		newRequest := elastic.NewBulkIndexRequest().Index("torrent").Id(torrent.InfoHash).Doc(torrent)
 		bulk = bulk.Add(newRequest)
 
-		log.Printf("[%d]%s\n", bulk.NumberOfActions(), value)
+		log.Printf("[%d] %s\n", bulk.NumberOfActions(), torrent.InfoHash)
 
 		if bulk.NumberOfActions() > 20 { //TODO: change this later
 			_, err = bulk.Do(ctx)
