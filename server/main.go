@@ -32,7 +32,7 @@ type bitdata struct {
 type bitdataWithSuggest struct {
 	InfoHash string `json:"infohash"`
 	Name     string `json:"name"`
-	Name_Suggest string `json:-`
+	Name_Suggest string `json:"-"`
 	Files    []file `json:"files,omitempty"`
 	Length   int    `json:"length,omitempty"`
 }
