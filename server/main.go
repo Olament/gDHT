@@ -124,7 +124,6 @@ func main() {
 
 	/* create index */
 	torrentMapping := `{
-				"torrent": {
 					"mappings": {
 						"properties": {
 							"files": {
@@ -148,7 +147,6 @@ func main() {
 							}
 						}
 					}
-				}
 		}`
 
 	isIndexExist, err := es.IndexExists("torrent").Do(ctx)
