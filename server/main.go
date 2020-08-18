@@ -132,22 +132,22 @@ func main() {
 										"type": "long"
 									},
 									"path": {
-										"type": "completion",
+										"type": "completion"
 									}
 								}
 							},
 							"infohash": {
-								"type": "keyword",
+								"type": "keyword"
 							},
 							"length": {
 								"type": "long"
 							},
 							"name": {
-								"type": "completion",
+								"type": "completion"
 							}
 						}
 					}
-		}`
+				}`
 
 	isIndexExist, err := es.IndexExists("torrent").Do(ctx)
 	if err != nil {
