@@ -74,12 +74,14 @@ func Process(client *elastic.Client, bulk *elastic.BulkService, value string) {
 	var torrent bitdata
 	err := json.Unmarshal([]byte(value), &torrent)
 	if err != nil {
-		log.Fatal(err)
+		log.Printf("Fail to unmarshal %s\n", value)
+		return
 	}
 
 	isExist, err := client.Exists().Index("torrent").Id(torrent.InfoHash).Do(ctx)
 	if err != nil {
-		log.Fatal(err)
+		log.Printf("Fail to check if %s exist in ES\n", torrent.InfoHash)
+		return
 	}
 
 	if !isExist {
@@ -91,7 +93,7 @@ func Process(client *elastic.Client, bulk *elastic.BulkService, value string) {
 		if bulk.NumberOfActions() > 20 { //TODO: change this later
 			_, err = bulk.Do(ctx)
 			if err != nil {
-				log.Fatal(err)
+				log.Printf("Failed to bulk index: %s\n", err)
 			}
 		}
 	}
@@ -101,13 +103,13 @@ func main() {
 	/* setup gRPC service */
 	lis, err := net.Listen("tcp", ":50051")
 	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
+		log.Fatalf("failed to listen: %v\n", err)
 	}
 	go func() {
 		s := grpc.NewServer()
 		pb.RegisterBitTorrentServer(s, &server{})
 		if err := s.Serve(lis); err != nil {
-			log.Fatalf("failed to serve: %v", err)
+			log.Fatalf("failed to serve: %v\n", err)
 		}
 	}()
 
@@ -117,7 +119,7 @@ func main() {
 	/* setup elastic search */
 	es, err := elastic.NewSimpleClient(elastic.SetURL("http://elastic:9200"))
 	if err != nil {
-		log.Fatalf("Error creating the client: %s", err)
+		log.Fatalf("Error creating the client: %s\n", err)
 	}
 
 	/* create index */
@@ -151,13 +153,13 @@ func main() {
 
 	isIndexExist, err := es.IndexExists("torrent").Do(ctx)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("Cannot check if index exist: %s\n", err)
 	}
 
 	if !isIndexExist {
 		_, err = es.CreateIndex("torrent").BodyString(torrentMapping).Do(ctx)
 		if err != nil {
-			log.Fatalf("Fail to create index: %s", err)
+			log.Fatalf("Fail to create index: %s\n", err)
 		}
 	}
 
@@ -166,7 +168,7 @@ func main() {
 	for {
 		value, err := rdb.BLPop(0*time.Second, "queue").Result()
 		if err != nil {
-			log.Fatal(err)
+			log.Fatalf("Failed to pull data from redis: %s\n", err)
 		}
 		Process(es, bulkBody, value[1])
 	}
