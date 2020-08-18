@@ -132,7 +132,9 @@ func main() {
 										"type": "long"
 									},
 									"path": {
-										"type": "completion"
+										"type": "completion",
+										"analyzer": "standard",
+										"search_analyzer": "standard"
 									}
 								}
 							},
@@ -143,7 +145,9 @@ func main() {
 								"type": "long"
 							},
 							"name": {
-								"type": "completion"
+								"type": "completion",
+								"analyzer": "standard",
+								"search_analyzer": "standard"
 							}
 						}
 					}
