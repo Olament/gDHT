@@ -120,6 +120,47 @@ func main() {
 		log.Fatalf("Error creating the client: %s", err)
 	}
 
+	/* create index */
+	torrentMapping := `{
+				"torrent": {
+					"mappings": {
+						"properties": {
+							"files": {
+								"properties": {
+									"length": {
+										"type": "long"
+									},
+									"path": {
+										"type": "completion",
+									}
+								}
+							},
+							"infohash": {
+								"type": "keyword",
+							},
+							"length": {
+								"type": "long"
+							},
+							"name": {
+								"type": "completion",
+							}
+						}
+					}
+				}
+		}`
+
+	isIndexExist, err := es.IndexExists("torrent").Do(ctx)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if !isIndexExist {
+		_, err = es.CreateIndex("torrent").BodyString(torrentMapping).Do(ctx)
+		if err != nil {
+			log.Fatalf("Fail to create index: %s", err)
+		}
+	}
+
 	bulkBody := es.Bulk();
 
 	for {
