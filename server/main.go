@@ -67,7 +67,7 @@ func (s *server) Send(ctx context.Context, in *pb.BitTorrent) (*pb.Empty, error)
 }
 
 // process data from redis message queue by indexing them to elastic search
-func Process(client *elastic.Client, value string) {
+func Process(client *elastic.Client, bulk *elastic.BulkService, value string) {
 
 	// TODO: filter the value
 
@@ -83,9 +83,16 @@ func Process(client *elastic.Client, value string) {
 	}
 
 	if !isExist {
-		_, err = client.Index().Index("torrent").Id(torrent.InfoHash).BodyJson(torrent).Do(ctx)
-		if err != nil {
-			log.Fatal(err)
+		newRequest := elastic.NewBulkIndexRequest().Index("torrent").Id(torrent.InfoHash).Doc(torrent)
+		bulk = bulk.Add(newRequest)
+
+		log.Printf("[%d]%s", bulk.NumberOfActions(), value)
+
+		if bulk.NumberOfActions() > 20 { //TODO: change this later
+			_, err = bulk.Do(ctx)
+			if err != nil {
+				log.Fatal(err)
+			}
 		}
 	}
 }
@@ -113,11 +120,13 @@ func main() {
 		log.Fatalf("Error creating the client: %s", err)
 	}
 
+	bulkBody := es.Bulk();
+
 	for {
 		value, err := rdb.BLPop(0*time.Second, "queue").Result()
 		if err != nil {
 			log.Fatal(err)
 		}
-		Process(es, value[1])
+		Process(es, bulkBody, value[1])
 	}
 }
