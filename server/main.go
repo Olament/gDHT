@@ -25,14 +25,7 @@ type file struct {
 type bitdata struct {
 	InfoHash string `json:"infohash"`
 	Name     string `json:"name"`
-	Files    []file `json:"files,omitempty"`
-	Length   int    `json:"length,omitempty"`
-}
-
-type bitdataWithSuggest struct {
-	InfoHash string `json:"infohash"`
-	Name     string `json:"name"`
-	Name_Suggest string `json:"-"`
+	Name_Suggest string `json:"name_suggest"`
 	Files    []file `json:"files,omitempty"`
 	Length   int    `json:"length,omitempty"`
 }
@@ -79,7 +72,7 @@ func Process(client *elastic.Client, bulk *elastic.BulkService, value string) {
 
 	// TODO: filter the value
 
-	var torrent bitdataWithSuggest
+	var torrent bitdata
 	err := json.Unmarshal([]byte(value), &torrent)
 	if err != nil {
 		log.Printf("Fail to unmarshal %s\n", value)
