@@ -1,0 +1,164 @@
+html, body {
+    height: 100%;
+    font-family: sans-serif;
+    overflow: auto;
+}
+
+/*******
+Footer
+ *******/
+
+.footer {
+    position: absolute;
+    left:0;
+    bottom:0;
+    right:0;
+    height: 60px;
+    background-color: #f2f2f2;
+
+    display: flex;
+    justify-content: right;
+    align-content: center;
+    direction: rtl;
+}
+
+.footer-item {
+    font-family: 'Open Sans', sans-serif;
+    padding: 20px;
+    margin-right: 30px;
+}
+
+.footer-item a {
+    font-size: 14px;
+}
+
+.footer-item a:visited, .footer-item a:link{
+    color: #757575;
+    text-decoration: None;
+}
+
+.footer-item a:hover {
+    text-decoration: underline;
+}
+
+/*******
+Search box
+ *******/
+
+.search {
+    display: flex;
+    margin-top: 20%;
+    justify-content: center;
+    align-item: center;
+}
+
+.searchbutton {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* for autosuggest */
+
+.react-autosuggest__container {
+    position: relative;
+}
+
+.react-autosuggest__input {
+    padding: 10px;
+    margin: 10px;
+    height: 20px;
+    width: 500px;
+    border:1px solid #eaeaea;
+    outline:none;
+    font-size: 15px;
+}
+
+.react-autosuggest__input:hover{
+    border-color: #a0a0a0 #b9b9b9 #b9b9b9 #b9b9b9;
+}
+
+.react-autosuggest__input:focused {
+    border-color:#4d90fe;
+}
+
+.react-autosuggest__input:open {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.react-autosuggest__suggestions-container {
+    display: none;
+}
+
+.react-autosuggest__suggestions-container--open {
+    display: block;
+    position: absolute;
+    padding: 0px;
+    top: 51px;
+    width: 520px;
+    margin: 0 10px 0 10px;
+    border: 1px solid #aaa;
+    background-color: #fff;
+    /*font-family: Helvetica, sans-serif;*/
+    /*font-weight: 300;*/
+    z-index: 2;
+}
+
+.react-autosuggest__suggestions-list {
+    margin: 0;
+    padding: 5px 0 5px 0;
+    list-style-type: none;
+}
+
+.react-autosuggest__suggestion {
+    cursor: pointer;
+    padding: 7px 10px 7px 10px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+    /*padding: 10px 20px;*/
+}
+
+.react-autosuggest__suggestion--highlighted {
+    background-color: #ddd;
+}
+
+/* for search button */
+
+input[type="submit"] {
+    border-radius: 2px;
+    background: #f2f2f2;
+    border: 1px solid #f2f2f2;
+    color: #757575;
+    cursor: default;
+    font-size: 14px;
+    font-weight: bold;
+    width: 100px;
+    padding: 0 16px;
+    height:42px;
+}
+
+input[type="submit"]:hover {
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    background: #f8f8f8;
+    border: 1px solid #c6c6c6;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    color: #222;
+}
+
+
+.result {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.header {
+    font-family: 'Open Sans', sans-serif;
+    padding: 2%;
+    font-size: 30px;
+}
+
+.table {
+    width: 75%;
+}
