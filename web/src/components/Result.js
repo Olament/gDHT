@@ -46,26 +46,31 @@ class Result extends React.Component {
 
         const handleFiles = (torrent) => {
             if (torrent.files) {
-                let files = torrent.files.filter(item => item.path).map(file => ({
+                let filteredFiles = torrent.files.filter(item => item.path);
+                let files = filteredFiles.map(file => ({
                     fileName: file.path,
                     size: humanFileSize(parseInt(file.length, 10))
                 }));
+                let totalSize = humanFileSize(filteredFiles.map(item => parseInt(item['length'], 10)).
+                    reduce((acc, curr) => acc + Math.abs(curr)));
+
 
                 if (files.length > 50) {
+                    let original_size = files.length;
                     files = files.slice(0, 50);
                     files.push({
-                        fileName: "...",
+                        fileName: (original_size - 50) + " more files",
                         size: "..."
                     })
                 }
 
-                return files;
+                return [totalSize, files];
             }
 
-            return [{
+            return [humanFileSize(Math.abs(parseInt(torrent.length, 10))), [{
                 fileName: torrent.name,
-                size: humanFileSize(parseInt(torrent.length, 10))
-            }]
+                size: humanFileSize(Math.abs(parseInt(torrent.length, 10)))
+            }]];
         };
 
         fetch('/api/torrent/_search', requestOptions)
@@ -74,7 +79,8 @@ class Result extends React.Component {
                 data: data.hits.hits.map(item => ({
                     name: item._source.name,
                     infohash: item._source.infohash,
-                    files: handleFiles(item._source)
+                    files: handleFiles(item._source)[1],
+                    totalSize: handleFiles(item._source)[0]
                 }))
             }));
     };

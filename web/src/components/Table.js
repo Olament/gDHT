@@ -67,6 +67,9 @@ function Row(props) {
                     {row.name}
                 </TableCell>
                 <TableCell>
+                    {row.totalSize}
+                </TableCell>
+                <TableCell>
                     {row.infohash}
                 </TableCell>
             </TableRow>
@@ -111,7 +114,8 @@ Row.propTypes = {
                 fileName: PropTypes.string,
                 size: PropTypes.string
             })
-        )
+        ),
+        totalSize: PropTypes.string.isRequired
     }).isRequired,
 };
 
@@ -190,6 +194,7 @@ export default function CollapsibleTable(props) {
                     <TableRow>
                         <TableCell />
                         <TableCell>Name</TableCell>
+                        <TableCell>Size</TableCell>
                         <TableCell >Infohash</TableCell>
                     </TableRow>
                 </TableHead>
