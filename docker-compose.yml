@@ -5,8 +5,10 @@ services:
     image: "nginx"
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - /usr/local/share/ca-certificates:/etc/nginx/certs
     depends_on:
       - web
   web:
