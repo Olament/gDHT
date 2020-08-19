@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {makeStyles, useTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Collapse from '@material-ui/core/Collapse';
+import LinkIcon from '@material-ui/icons/Link';
 
 /* table import */
 import Table from '@material-ui/core/Table';
@@ -70,7 +71,7 @@ function Row(props) {
                     {row.totalSize}
                 </TableCell>
                 <TableCell>
-                    {row.infohash}
+                    <a href={"magnet:?xt=urn:btih:" + row.infohash} rel="nofollow">link</a>
                 </TableCell>
             </TableRow>
             <TableRow>
@@ -195,7 +196,7 @@ export default function CollapsibleTable(props) {
                         <TableCell />
                         <TableCell>Name</TableCell>
                         <TableCell>Size</TableCell>
-                        <TableCell >Infohash</TableCell>
+                        <TableCell><LinkIcon /></TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
