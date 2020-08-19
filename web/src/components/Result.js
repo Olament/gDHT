@@ -68,7 +68,7 @@ class Result extends React.Component {
             }]
         };
 
-        fetch('/torrent/_search', requestOptions)
+        fetch('/api/torrent/_search', requestOptions)
             .then(response => response.json())
             .then(data => this.setState({
                 data: data.hits.hits.map(item => ({

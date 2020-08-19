@@ -45,7 +45,7 @@ class SearchBox extends React.Component {
             })
         };
 
-        fetch('/_search', requestOptions)
+        fetch('/api/_search', requestOptions)
             .then(response => response.json())
             .then(data => this.setState({
                 suggestions: data.suggest["search-suggest"][0].options.map(item => item.text)
