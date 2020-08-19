@@ -29,7 +29,7 @@ Footer
 }
 
 .footer-item a {
-    font-size: 14px;
+    font-size: 1.5vh;
 }
 
 .footer-item a:visited, .footer-item a:link{
@@ -100,7 +100,7 @@ Search box
     height: 20px;
     border:1px solid #eaeaea;
     outline:none;
-    font-size: 15px;
+    font-size: 1.5vh;
 }
 
 .react-autosuggest__input:hover {
@@ -143,7 +143,7 @@ Search box
     cursor: pointer;
     padding: 7px 10px 7px 10px;
     font-family: 'Open Sans', sans-serif;
-    font-size: 15px;
+    font-size: 1.5vh;
     /*padding: 10px 20px;*/
 }
 
@@ -159,7 +159,7 @@ input[type="submit"] {
     border: 1px solid #f2f2f2;
     color: #757575;
     cursor: default;
-    font-size: 14px;
+    font-size: 1.5vh;
     font-weight: bold;
     width: 100px;
     padding: 0 16px;
@@ -184,9 +184,9 @@ input[type="submit"]:hover {
 .header {
     font-family: 'Open Sans', sans-serif;
     padding: 2%;
-    font-size: 30px;
+    font-size: 2.5vh;
 }
 
 .table {
-    width: 75%;
+    width: 80%;
 }
