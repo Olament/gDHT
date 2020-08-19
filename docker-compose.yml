@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  swag:
+  nginx:
     image: linuxserver/letsencrypt
     environment:
       - PUID=1000
