@@ -59,18 +59,18 @@ function Row(props) {
     return (
         <React.Fragment>
             <TableRow className={classes.root} onClick={() => setOpen(!open)}>
-                <TableCell>
+                <TableCell style={{ width: "10%" }}>
                     <IconButton aria-label="expand row" size="small">
                         {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </IconButton>
                 </TableCell>
-                <TableCell component="th" scope="row">
+                <TableCell component="th" scope="row" style={{ width: "70%" }}>
                     {row.name}
                 </TableCell>
-                <TableCell>
+                <TableCell style={{width: "10%"}}>
                     {row.totalSize}
                 </TableCell>
-                <TableCell>
+                <TableCell style={{width: "10%" }}>
                     <a href={"magnet:?xt=urn:btih:" + row.infohash} rel="nofollow">link</a>
                 </TableCell>
             </TableRow>
@@ -190,7 +190,7 @@ export default function CollapsibleTable(props) {
 
     return (
         <TableContainer component={Paper}>
-            <Table stickyHeader aria-label="collapsible table">
+            <Table stickyHeader aria-label="collapsible table" style={{tableLayout: "auto"}}>
                 <TableHead>
                     <TableRow>
                         <TableCell />
