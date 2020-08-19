@@ -1,6 +1,12 @@
 version: '3'
 
 services:
+  web:
+    build: web/.
+    depends_on:
+      -server
+    ports:
+      "3000:80"
   server:
     build: server/.
     depends_on:
