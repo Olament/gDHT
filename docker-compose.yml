@@ -6,7 +6,7 @@ services:
     depends_on:
       - server
     ports:
-      "3000:80"
+      - "3000:80"
   server:
     build: server/.
     depends_on:
