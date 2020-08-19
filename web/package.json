@@ -8,6 +8,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "http-proxy-middleware": "^1.0.5",
     "react": "^16.13.1",
     "react-autosuggest": "^10.0.2",
     "react-dom": "^16.13.1",
@@ -35,5 +36,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "http://107.175.147.28:9200"
 }

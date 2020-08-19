@@ -45,7 +45,7 @@ class SearchBox extends React.Component {
             })
         };
 
-        fetch('http://107.175.147.28:9200/_search', requestOptions)
+        fetch('/_search', requestOptions)
             .then(response => response.json())
             .then(data => this.setState({
                 suggestions: data.suggest["search-suggest"][0].options.map(item => item.text)
