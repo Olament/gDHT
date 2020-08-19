@@ -13,6 +13,9 @@ services:
     build: web/.
     depends_on:
       - server
+  crawler:
+    build: crawler/.
+    network_mode: "host"
   server:
     build: server/.
     depends_on:
