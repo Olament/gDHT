@@ -10,6 +10,7 @@ import (
 	"log"
 	"net"
 	"github.com/olivere/elastic/v7"
+	"os"
 	"time"
 )
 
@@ -119,7 +120,10 @@ func main() {
 	log.Println("Connect to elastic search node")
 
 	/* setup elastic search */
-	es, err := elastic.NewSimpleClient(elastic.SetURL("http://elastic:9200"))
+	es, err := elastic.NewSimpleClient(
+		elastic.SetURL("http://elastic:9200"),
+		elastic.SetBasicAuth(os.Getenv("username"), os.Getenv("password")))
+	)
 	if err != nil {
 		log.Fatalf("Error creating the client: %s\n", err)
 	}
