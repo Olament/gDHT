@@ -43,7 +43,10 @@ export default class List extends React.Component {
 
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic d2ViOnBhc3N3b3Jk',
+            },
             body: JSON.stringify({
                 "query": {
                     "multi_match": {

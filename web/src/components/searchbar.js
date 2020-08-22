@@ -29,7 +29,10 @@ export default class SearchBar extends React.Component {
     onSuggestionsFetchRequested = ({ value }) => {
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic d2ViOnBhc3N3b3Jk',
+            },
             body: JSON.stringify({
                 "suggest": {
                     "search-suggest" : {
