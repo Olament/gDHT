@@ -33,6 +33,9 @@ services:
       - redis
     ports:
       - "50051:50051"
+    environment:
+      - username=crawler
+      - password=PASSWORD
   redis:
     image: "redis:alpine"
   elastic:
