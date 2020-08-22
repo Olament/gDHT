@@ -1,19 +1,15 @@
 {
-  "name": "search-demo",
+  "name": "new-web",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.11.0",
-    "@material-ui/icons": "^4.9.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
-    "http-proxy-middleware": "^1.0.5",
     "react": "^16.13.1",
-    "react-autosuggest": "^10.0.2",
+    "react-autocomplete": "^1.8.1",
     "react-dom": "^16.13.1",
-    "react-router": "^5.2.0",
-    "react-router-dom": "^5.2.0",
+    "react-helmet": "^6.1.0",
     "react-scripts": "3.4.3"
   },
   "scripts": {
@@ -36,5 +32,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "https://guo.sh"
 }

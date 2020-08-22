@@ -1,6 +1,7 @@
 import React from "react";
 
-import Table from "./Table"
+import ListItem from "./listitem";
+
 
 function humanFileSize(bytes, dp=1) {
     const thresh = 1000;
@@ -21,16 +22,20 @@ function humanFileSize(bytes, dp=1) {
     return bytes.toFixed(dp) + ' ' + units[u];
 }
 
-class Result extends React.Component {
+export default class List extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
             data: []
         }
-    }
+    };
 
     searchByKeyword = (keyword) => {
+        // edge case: no empty search
+        if (keyword === "") {
+            return
+        }
+
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -51,8 +56,8 @@ class Result extends React.Component {
                     fileName: file.path,
                     size: humanFileSize(parseInt(file.length, 10))
                 }));
-                let totalSize = humanFileSize(filteredFiles.map(item => parseInt(item['length'], 10)).
-                    reduce((acc, curr) => acc + Math.abs(curr)));
+                let totalSize = humanFileSize(filteredFiles.map(item =>
+                    parseInt(item['length'], 10)).reduce((acc, curr) => acc + Math.abs(curr)));
 
 
                 if (files.length > 50) {
@@ -73,36 +78,37 @@ class Result extends React.Component {
             }]];
         };
 
-        fetch('/api/torrent/_search?size=30', requestOptions)
+        fetch('/api/torrent/_search?size=20', requestOptions)
             .then(response => response.json())
             .then(data => this.setState({
                 data: data.hits.hits.map(item => ({
                     name: item._source.name,
-                    infohash: item._source.infohash,
-                    files: handleFiles(item._source)[1],
-                    totalSize: handleFiles(item._source)[0]
+                    link: item._source.infohash,
+                    //files: handleFiles(item._source)[1],
+                    size: handleFiles(item._source)[0]
                 }))
             }));
     };
 
-    componentDidMount() {
-        this.searchByKeyword(this.props.match.params.queryText)
-    }
-
     render() {
+        // no result page
+        if (this.state.data.length === 0) {
+            return (
+                <h2 style={{borderBottom: "0"}}>No result</h2>
+            )
+        }
+
         return (
-            <div>
-                <div className="header">
-                    Search results for "{this.props.match.params.queryText}"
-                </div>
-                <div className="result">
-                    <div className="table">
-                        <Table datasource={this.state.data} />
-                    </div>
-                </div>
+            <div className="grid posts with-tags">
+                {this.state.data.map(item =>
+                    <ListItem
+                        key={item.link}
+                        name={item.name}
+                        size={item.size}
+                        link={item.link}
+                    />
+                )}
             </div>
         )
-    }
+    };
 }
-
-export default Result;

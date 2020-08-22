@@ -1,24 +1,15 @@
 import React from "react";
-import SearchBox from "./SearchBox";
-import SearchButton from "./SearchButton";
 
-import { withRouter } from 'react-router-dom'
+import List from "./list";
+import SearchBar from "./searchbar";
 
-class Search extends React.Component {
+export default class Search extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
             queryText: ""
         }
-    }
-
-    onClick = () => {
-        this.props.history.push("/result/" + this.state.queryText)
-    }
-
-    onEnterKeyPress = () => {
-        this.props.history.push("/result/" + this.state.queryText)
+        this.listElement = React.createRef()
     }
 
     updateQueryText = (newText) => {
@@ -27,14 +18,27 @@ class Search extends React.Component {
         })
     }
 
+    handleClick = () => {
+        this.listElement.current.searchByKeyword(this.state.queryText)
+    }
+
     render() {
-        return (
-            <div className="search">
-                <SearchBox updateQueryText={this.updateQueryText} onEnterKeyPress={this.onEnterKeyPress}/>
-                <SearchButton onClick={this.onClick}/>
+        return(
+            <div className="container">
+                <div style={{display: "flex", justifyContent: "center"}}>
+                    <SearchBar
+                        updateQueryText={this.updateQueryText}
+                    />
+                    <button
+                        onClick={this.handleClick}
+                    >Go</button>
+                </div>
+                <section>
+                    <List
+                        ref={this.listElement}
+                    />
+                </section>
             </div>
         )
     }
 }
-
-export default withRouter(Search);

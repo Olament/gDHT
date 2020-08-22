@@ -1,33 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './style.css'
-import Footer from "./components/Footer";
-import Search from "./components/Search";
-import Result from "./components/Result";
-import {
-    BrowserRouter,
-    Switch,
-    Route,
-} from 'react-router-dom';
 
+import './style.css';
 
-class Index extends React.Component {
-    render() {
-        return(
-            <BrowserRouter>
-                <Switch>
-                    <Route path='/result/:queryText' component={Result}></Route>
-                    <Route path='/'>
-                        <Search />
-                        <Footer />
-                    </Route>
-                </Switch>
-            </BrowserRouter>
-        );
-    }
-}
+import Search from "./components/search";
+import Header from "./components/header"
 
 ReactDOM.render(
-    <Index />,
-    document.getElementById('root')
+  <React.StrictMode>
+      <Header />
+      <section>
+          <div className="container text-center">
+              <h1>gDHT</h1>
+              <p className="subtitle">
+                  A distributed torrent search engine
+              </p>
+          </div>
+      </section>
+      <section>
+        <Search />
+      </section>
+  </React.StrictMode>,
+  document.getElementById('root')
 );
+
