@@ -22,12 +22,19 @@ export default class Search extends React.Component {
         this.listElement.current.searchByKeyword(this.state.queryText)
     }
 
+    handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            this.listElement.current.searchByKeyword(this.state.queryText)
+        }
+    }
+
     render() {
         return(
             <div className="container">
                 <div style={{display: "flex", justifyContent: "center"}}>
                     <SearchBar
                         updateQueryText={this.updateQueryText}
+                        handleKeyDown={this.handleKeyDown}
                     />
                     <button
                         onClick={this.handleClick}

@@ -16,6 +16,7 @@ export default class SearchBar extends React.Component {
                 id="search"
                 type="search"
                 placeholder="Search for anything..."
+                onKeyDown={this.props.handleKeyDown}
                 onChange={e => {
                     this.setState({value: e.target.value});
                     this.props.updateQueryText(e.target.value)
