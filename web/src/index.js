@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import './style.css';
 
 import Search from "./components/search";
-import Header from "./components/header"
+import Header from "./components/header";
 
 ReactDOM.render(
   <React.StrictMode>
