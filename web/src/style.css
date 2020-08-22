@@ -1243,204 +1243,42 @@ time,
   font-size: 1rem;
 }
 
-/* Tags */
-
-.count {
-  font-weight: 700;
-  color: var(--link-color);
-}
-
-.tags {
-  display: flex !important;
-  flex-wrap: wrap;
-  align-items: center;
-  margin-left: -0.5rem;
-  margin-right: -0.5rem;
-}
-
-.tags > a {
-  display: block;
-  font-weight: 500;
-  background: #f1f3f5;
-  color: #343a40;
-  margin: 0.2rem;
-  padding: 0.4rem 0.6rem;
-  font-size: 0.8rem;
-  border-radius: 3rem;
-  border-bottom: 0;
-  white-space: nowrap;
-  line-height: 1;
-}
-
-.tags > a:hover {
-  background: #868e96;
-  color: white;
-}
-
-mark {
-  background: #ffec99;
-}
-
-a.tag-javascript,
-a.tag-sql {
-  background: #fff3bf;
-  color: black;
-}
-
-a.tag-javascript:hover,
-a.tag-sql:hover {
-  background: #ffd43b;
-  color: black;
-}
-
-a.tag-linux,
-a.tag-git,
-a.tag-snippets,
-a.tag-html {
-  background: #fff4e6;
-  color: #e8590c;
-}
-
-a.tag-linux:hover,
-a.tag-git:hover,
-a.tag-snippets:hover,
-a.tag-html:hover {
-  background: #fd7e14;
-  color: white;
-}
-
-a.tag-vue,
-a.tag-new-year {
-  color: #087f5b;
-  background: #e6fcf5;
-}
-
-a.tag-vue:hover,
-a.tag-new-year:hover {
-  background: #0ca678;
-  color: white;
-}
-
-a.tag-fundamentals,
-a.tag-game,
-a.tag-testing,
-a.tag-security,
-a.tag-server {
-  background: #d3f9d8;
-  color: #111;
-}
-
-a.tag-fundamentals:hover,
-a.tag-game:hover,
-a.tag-testing:hover,
-a.tag-security:hover,
-a.tag-server:hover {
-  background: #37b24d;
-  color: white;
-}
-
-a.tag-node,
-a.tag-automation,
-a.tag-ruby {
-  background: #fff5f5;
-  color: #e03131;
-}
-
-a.tag-node:hover,
-a.tag-automation:hover,
-a.tag-ruby:hover {
-  background: #f03e3e;
-  color: white;
-}
-
-a.tag-wordpress,
-a.tag-projects,
-a.tag-reference,
-a.tag-notes,
-a.tag-jQuery {
-  background: #e3fafc;
-  color: #0c8599;
-}
-
-a.tag-wordpress:hover,
-a.tag-projects:hover,
-a.tag-reference:hover,
-a.tag-notes:hover,
-a.tag-jQuery:hover {
-  background: #1098ad;
-  color: white;
-}
-
-a.tag-css,
-a.tag-dom,
-a.tag-architecture {
-  background: #e7f5ff;
-  color: #1971c2;
-}
-
-a.tag-css:hover,
-a.tag-dom:hover,
-a.tag-architecture:hover {
-  background: #1c7ed6;
-  color: white;
-}
-
-a.tag-php,
-a.tag-redux,
-a.tag-gatsby,
-a.tag-life {
-  background: #f3f0ff;
-  color: #6741d9;
-}
-
-a.tag-php:hover,
-a.tag-redux:hover,
-a.tag-gatsby:hover,
-a.tag-life:hover {
-  background: #7950f2;
-  color: white;
-}
-
-a.tag-react,
-a.tag-api,
-a.tag-tutorial {
-  background: #edf2ff;
-  color: #3b5bdb;
-}
-
-a.tag-react:hover,
-a.tag-api:hover,
-a.tag-tutorial:hover {
-  background: #4263eb;
-  color: white;
-}
-
-a.tag-design,
-a.tag-database,
-a.tag-travel {
-  background: #fff0f6;
-  color: #c2255c;
-}
-
-a.tag-design:hover,
-a.tag-database:hover,
-a.tag-travel:hover {
-  background: #e64980;
-  color: white;
-}
-
-a.tag-notes,
-a.tag-tools {
-  background: #f8f0fc;
-  color: #9c36b5;
-}
-
-a.tag-notes:hover,
-a.tag-tools:hover {
-  background: #ae3ec9;
-  color: white;
-}
-
 .text-center {
   text-align: center;
+}
+
+/** react auto-suggest */
+
+.react-autosuggest__container {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin: 0px 1rem;
+}
+
+.react-autosuggest__suggestions-container--open {
+  display: block;
+  position: absolute;
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid #aaa;
+  background-color: #fff;
+  border-radius: 0.3rem;
+  z-index: 2;
+}
+
+.react-autosuggest__suggestions-list {
+  margin: 0 0;
+  padding: 0 0;
+  font-size: 1rem;
+  list-style-type: none;
+}
+
+.react-autosuggest__suggestion {
+  padding: 0.25rem 1rem;
+  overflow-wrap: break-word;
+}
+
+.react-autosuggest__suggestion--highlighted {
+  background-color: #ddd;
 }
