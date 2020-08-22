@@ -22,15 +22,20 @@ function humanFileSize(bytes, dp=1) {
     return bytes.toFixed(dp) + ' ' + units[u];
 }
 
+const RESULT_PER_PAGE = 20;
+
 export default class List extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: []
+            data: [],
+            keyword: "",
+            currentPage: 0,
+            totalPage: 0,
         }
     };
 
-    searchByKeyword = (keyword) => {
+    searchByKeyword = (keyword, page=1) => {
         // edge case: no empty search
         if (keyword === "") {
             return
@@ -45,7 +50,9 @@ export default class List extends React.Component {
                         "query" : keyword,
                         "fields" : ["name^2", "files.path"]
                     }
-                }
+                },
+                "size": RESULT_PER_PAGE,
+                "from": (page - 1) * RESULT_PER_PAGE,
             })
         };
 
@@ -78,7 +85,7 @@ export default class List extends React.Component {
             }]];
         };
 
-        fetch('/api/torrent/_search?size=20', requestOptions)
+        fetch('/api/torrent/_search', requestOptions)
             .then(response => response.json())
             .then(data => this.setState({
                 data: data.hits.hits.map(item => ({
@@ -86,28 +93,61 @@ export default class List extends React.Component {
                     link: item._source.infohash,
                     //files: handleFiles(item._source)[1],
                     size: handleFiles(item._source)[0]
-                }))
+                })),
+                keyword: keyword,
+                totalPage: Math.ceil(data.hits.total.value / RESULT_PER_PAGE),
+                currentPage: page,
             }));
     };
 
     render() {
         // no result page
+        if (this.state.keyword === "") {
+            return (
+                <div></div>
+            );
+        }
+
         if (this.state.data.length === 0) {
             return (
-                <h2 style={{borderBottom: "0"}}>No result</h2>
+                <h2 style={{borderBottom: "0"}}>No result for "{this.state.keyword}"</h2>
             )
         }
 
         return (
-            <div className="grid posts with-tags">
-                {this.state.data.map(item =>
-                    <ListItem
-                        key={item.link}
-                        name={item.name}
-                        size={item.size}
-                        link={item.link}
-                    />
-                )}
+            <div>
+                <div className="grid posts with-tags">
+                    {this.state.data.map(item =>
+                        <ListItem
+                            key={item.link}
+                            name={item.name}
+                            size={item.size}
+                            link={item.link}
+                        />
+                    )}
+                </div>
+                <div style={{display: "flex", margin: "1rem"}}>
+                    <div className="tags" style={{width: "50%", justifyContent: "center"}}>
+                        {
+                            (this.state.currentPage > 1) && (
+                                <button
+                                    className="tag"
+                                    onClick={() => this.searchByKeyword(this.state.keyword, this.state.currentPage - 1)}
+                                >Prev</button>
+                            )
+                        }
+                    </div>
+                    <div className="tags" style={{width: "50%", justifyContent: "center"}}>
+                        {
+                            (this.state.currentPage < this.state.totalPage) && (
+                                <button
+                                    className="tag"
+                                    onClick={() => this.searchByKeyword(this.state.keyword, this.state.currentPage + 1)}
+                                >Next</button>
+                            )
+                        }
+                    </div>
+                </div>
             </div>
         )
     };

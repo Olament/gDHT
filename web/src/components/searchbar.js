@@ -19,12 +19,8 @@ export default class SearchBar extends React.Component {
         };
     }
 
-    onChange = (event, { newValue, method }) => {
+    onChange = (event, { newValue }) => {
         this.props.updateQueryText(newValue);
-        console.log(method);
-        if (method === 'enter') {
-            this.props.handleEnter();
-        }
         this.setState({
             value: newValue
         });

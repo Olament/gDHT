@@ -926,98 +926,6 @@ a.cell {
   color: var(--light-font-color);
 }
 
-/* Guide */
-
-.grid.guide {
-  grid-gap: 1rem;
-  grid-auto-rows: 1fr;
-  margin-top: 3rem;
-  margin-left: 0;
-  margin-right: 0;
-}
-
-.grid.guide a {
-  background: var(--light-background);
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  padding: 1rem;
-  border-radius: 0.5rem;
-}
-
-.grid.guide img {
-  padding: 0.5rem;
-  border-radius: 0.3rem;
-}
-
-.grid.guide .gatsby-image-wrapper {
-  height: 50px !important;
-  width: 50px !important;
-  margin-right: 1.5rem;
-}
-
-.grid.guide a:hover {
-  transform: translate3D(0, -1px, 0);
-  background: var(--lighter-background);
-}
-
-.grid.guide h2 {
-  margin: 0;
-  font-size: 1rem;
-  flex: 1;
-  font-weight: 600;
-}
-
-@media screen and (min-width: 600px) {
-  .grid.guide {
-    grid-gap: 1.5rem;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .grid.guide a {
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    padding: 1.5rem;
-  }
-  .grid.guide h2 {
-    margin: 1rem 0;
-    flex: none;
-  }
-
-  .grid.guide p {
-    font-weight: 400;
-    margin: 0;
-    line-height: 1.3;
-  }
-  .grid.guide .gatsby-image-wrapper {
-    height: 75px !important;
-    width: 75px !important;
-    margin-right: 0;
-  }
-}
-
-@media screen and (min-width: 800px) {
-  .grid.guide {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .grid.guide a {
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .grid.guide h2 {
-    margin-top: 1.5rem;
-    font-size: 1.3rem;
-  }
-
-  .grid.guide .gatsby-image-wrapper {
-    height: 75px !important;
-    width: 75px !important;
-    margin-right: 0;
-  }
-}
-
 /* Post */
 
 .grid.post {
@@ -1281,4 +1189,34 @@ time,
 
 .react-autosuggest__suggestion--highlighted {
   background-color: #ddd;
+}
+
+/* tags */
+
+.tags {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+}
+
+.tags > button {
+  display: block;
+  font-weight: 600;
+  color: #343a40;
+  margin: 0.2rem;
+  padding: 0rem 0.6rem;
+  font-size: 1.25rem;
+  border-radius: 0;
+  border: 0;
+  background: linear-gradient(transparent 80%, #dbe4ff 0);
+  white-space: nowrap;
+  line-height: 1.5;
+  Outline: none;
+}
+
+.tags > button:active {
+  border-radius: 0;
+  transform: translateY(2px);
 }
