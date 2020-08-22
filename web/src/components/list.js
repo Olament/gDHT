@@ -132,7 +132,10 @@ export default class List extends React.Component {
                             (this.state.currentPage > 1) && (
                                 <button
                                     className="tag"
-                                    onClick={() => this.searchByKeyword(this.state.keyword, this.state.currentPage - 1)}
+                                    onClick={() => {
+                                        window.scrollTo({top: 0, behavior: "smooth"})
+                                        this.searchByKeyword(this.state.keyword, this.state.currentPage - 1)
+                                    }}
                                 >Prev</button>
                             )
                         }
@@ -142,7 +145,10 @@ export default class List extends React.Component {
                             (this.state.currentPage < this.state.totalPage) && (
                                 <button
                                     className="tag"
-                                    onClick={() => this.searchByKeyword(this.state.keyword, this.state.currentPage + 1)}
+                                    onClick={() => {
+                                        window.scrollTo({top: 0, behavior: "smooth"})
+                                        this.searchByKeyword(this.state.keyword, this.state.currentPage + 1)
+                                    }}
                                 >Next</button>
                             )
                         }
