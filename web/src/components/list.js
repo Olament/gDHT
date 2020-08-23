@@ -5,6 +5,7 @@ import ListBar from "./listbar"
 
 
 function humanFileSize(bytes, dp=1) {
+    bytes = Math.abs(bytes)
     const thresh = 1000;
 
     if (Math.abs(bytes) < thresh) {
