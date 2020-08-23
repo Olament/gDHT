@@ -1201,22 +1201,36 @@ time,
   margin-right: -0.5rem;
 }
 
-.tags > button {
+/* list bar */
+.list-bar {
+  display: flex;
+}
+
+.list-bar .item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 33%;
+
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0.2rem;
+  line-height: 1.5;
+  /*padding: 0.5rem 1rem;*/
+}
+
+.list-bar .item > button {
   display: block;
   font-weight: 600;
   color: #343a40;
-  margin: 0.2rem;
-  padding: 0rem 0.6rem;
-  font-size: 1.25rem;
   border-radius: 0;
   border: 0;
   background: linear-gradient(transparent 80%, #dbe4ff 0);
   white-space: nowrap;
-  line-height: 1.5;
   Outline: none;
 }
 
-.tags > button:active {
+.list-bar .item > button:active {
   border-radius: 0;
   transform: translateY(2px);
 }

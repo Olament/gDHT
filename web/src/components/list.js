@@ -1,6 +1,7 @@
 import React from "react";
 
 import ListItem from "./listitem";
+import ListBar from "./listbar"
 
 
 function humanFileSize(bytes, dp=1) {
@@ -129,34 +130,12 @@ export default class List extends React.Component {
                         />
                     )}
                 </div>
-                <div style={{display: "flex", margin: "1rem"}}>
-                    <div className="tags" style={{width: "50%", justifyContent: "center"}}>
-                        {
-                            (this.state.currentPage > 1) && (
-                                <button
-                                    className="tag"
-                                    onClick={() => {
-                                        window.scrollTo({top: 0, behavior: "smooth"})
-                                        this.searchByKeyword(this.state.keyword, this.state.currentPage - 1)
-                                    }}
-                                >Prev</button>
-                            )
-                        }
-                    </div>
-                    <div className="tags" style={{width: "50%", justifyContent: "center"}}>
-                        {
-                            (this.state.currentPage < this.state.totalPage) && (
-                                <button
-                                    className="tag"
-                                    onClick={() => {
-                                        window.scrollTo({top: 0, behavior: "smooth"})
-                                        this.searchByKeyword(this.state.keyword, this.state.currentPage + 1)
-                                    }}
-                                >Next</button>
-                            )
-                        }
-                    </div>
-                </div>
+                <ListBar
+                    currentPage={this.state.currentPage}
+                    totalPage={this.state.totalPage}
+                    searchByKeyword={this.searchByKeyword}
+                    keyword={this.state.keyword}
+                />
             </div>
         )
     };
