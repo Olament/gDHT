@@ -10,9 +10,17 @@ gDHT is a search engine suite that allows user to host their own torrent search 
 
 ## Getting Started
 
+### Nginx
+
 The nginx server is bound to `YOURDOMAIN.COM` by default. If you want to host your own torrent search engine, your can change Nginx's environment variable `URL` in `docker-compose.yml`.
 
-The security features of the `ElasticSearch` is enabled by default. To ensure that `crawler` and `web` function normally, you need to create two user: *web* and *crawler*. Notice that *crawler* must have permission to write and read index and *web* must have permission to read index. Once you created those two users, you can pass the username and password to Golang `crawler` via the environment variables in `docker-compose.yml`. For user *web*, the password is hard-coded as *password* in the source code.
+### Golang Crawler
+
+You can leave the setting in `docker-compose.yml` unchanged if you run the suite with only one crawler. However, to add additional crawler to the system, change environment variable `address` under `crawler` to `master-server-ip-address:50051`.
+
+### ElasticSearch Security
+
+The security features of the `ElasticSearch` is enabled by default. To ensure that `crawler` and `web` function normally, you need to create two user: *web* and *crawler*. Notice that *crawler* must have permission to write and read index and *web* must have permission to read index. Once you created those two users, you can pass the username and password to Golang `crawler` and Nodejs `web` via the environment variables in `docker-compose.yml`. For more information on how to set up ElasticSearch, check those two articles [Configuring security in Elasticsearchedit](https://www.elastic.co/guide/en/elasticsearch/reference/current/configuring-security.html) and [Getting started with Elasticsearch security](https://www.elastic.co/blog/getting-started-with-elasticsearch-security).
 
 Then, start the server by
 
