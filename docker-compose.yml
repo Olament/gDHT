@@ -23,9 +23,6 @@ services:
     build: web/.
     depends_on:
       - server
-    environment:
-      - username=web
-      - password=password
   crawler:
     build: crawler/.
     network_mode: "host"
