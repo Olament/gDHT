@@ -47,7 +47,7 @@ export default class List extends React.Component {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Basic d2ViOnBhc3N3b3Jk',
+                'Authorization': 'Basic ' + Buffer.from(process.env.username + ':' + process.env.password).toString('base64'),
             },
             body: JSON.stringify({
                 "query": {
