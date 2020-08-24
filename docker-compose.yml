@@ -7,7 +7,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=America/New_York
-      - URL=guo.sh
+      - URL=YOURDOMAIN.COM
       - SUBDOMAINS=www,
       - VALIDATION=http
       - DNSPLUGIN=cloudflare #optional
