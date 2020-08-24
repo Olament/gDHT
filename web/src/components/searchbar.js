@@ -1,7 +1,6 @@
 import React from 'react'
 import Autosuggest from 'react-autosuggest';
 
-
 const getSuggestionValue = suggestion => suggestion;
 
 const renderSuggestion = suggestion => (
@@ -31,7 +30,7 @@ export default class SearchBar extends React.Component {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + Buffer.from(process.env.username + ':' + process.env.password).toString('base64')
+                'Authorization': 'Basic ' + Buffer.from(process.env.REACT_APP_USERNAME + ':' + process.env.REACT_APP_PASSWORD).toString('base64')
             },
             body: JSON.stringify({
                 "suggest": {
