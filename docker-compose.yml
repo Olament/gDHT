@@ -29,6 +29,8 @@ services:
   crawler:
     build: crawler/.
     network_mode: "host"
+    environment:
+      - address="localhost:50051"
   server:
     build: server/.
     depends_on:

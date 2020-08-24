@@ -9,6 +9,7 @@ import (
 	"log"
 	"net/http"
 	_ "net/http/pprof"
+	"os"
 	"strings"
 )
 
@@ -29,7 +30,7 @@ func main() {
 		http.ListenAndServe(":6060", nil)
 	}()
 
-	conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure(), grpc.WithBlock())
+	conn, err := grpc.Dial(os.Getenv("address"), grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}
